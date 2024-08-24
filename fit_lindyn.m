@@ -104,6 +104,7 @@ function L_ser_mu = lossfn_ser_mu(A,mu_0,x_ss,tvals,mvals)
     %the mean vectors are formatted as 1 x n vectors
     n_var = numel(mvals{1});
     A = reshape(A,[n_var,n_var]);
+    mvals = cellfun(@(x) x-x_ss', mvals,'UniformOutput',false); 
     A_tvals = arrayfun(@(t) t*A',tvals,'UniformOutput',false);
     V_tvals = cellfun(@expm, A_tvals,'UniformOutput',false);
     pred_mu = cellfun(@mtimes,repmat({mu_0-x_ss'},1,numel(tvals)),V_tvals','UniformOutput',false);
